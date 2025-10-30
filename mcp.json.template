@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "check_internet_connection": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "PATH_TO_REPO/mcp-servers/src/mcp_servers/ping",
+        "run",
+        "ping.py"
+      ]
+    },
+    "wikipedia_search": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "PATH_TO_REPO/mcp-servers/src/mcp_servers/wikipedia-search/",
+        "run",
+        "search.py"
+      ]
+    },
+    "weather": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "PATH_TO_REPO/mcp-servers/src/mcp_servers/weather",
+        "run",
+        "weather.py"
+      ]
+    },
+    "web_search": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "PATH_TO_REPO/mcp-servers/src/mcp_servers/web-search",
+        "run",
+        "web_search.py"
+      ]
+    }
+  }
+}

@@ -42,15 +42,15 @@ async def brave_web_search(
     async with AsyncWebCrawler() as crawler:
         result = await crawler.arun(
             url=f"https://search.brave.com/search?q={search_term_parsed}",
-            config=crawl_config
+            # config=crawl_config
         )
         
         if result.success:
         
             crawl_dict = {
-                'markdown':result.markdown.fit_markdown, 
-                'links': result.links,
-                'media': result.media
+                'markdown':result.markdown#.fit_markdown, 
+                # 'links': result.links,
+                # 'media': result.media
                 }
             
             logger.info('SUCCESS')
@@ -88,15 +88,15 @@ async def deep_search(link: str) -> str:
     async with AsyncWebCrawler() as crawler:
         result = await crawler.arun(
             url=link,
-            config=crawl_config
+            # config=crawl_config
         )
         
         if result.success:
         
             crawl_dict = {
-                'markdown':result.markdown.fit_markdown, 
-                'links': result.links,
-                'media': result.media
+                'markdown':result.markdown#.fit_markdown, 
+                # 'links': result.links,
+                # 'media': result.media
                 }
             
             logger.info('SUCCESS')

@@ -13,7 +13,7 @@ mcp = FastMCP("web-search")
 @mcp.tool(name = "Web Search")
 async def brave_web_search(
     search_term: str
-    ) -> dict:
+    ) -> str:
     """Tool to search the brave web search and scrape it's results. 
     This can be used whenever there is not sufficient information on the topic or no
     other available tool that could help.
@@ -28,7 +28,7 @@ async def brave_web_search(
               including external links and media sources to deep search if necessary.
     """
     
-    search_term_parsed = search_term.replace(" ", "+")
+    search_term_parsed: str = search_term.replace(" ", "+")
     
     crawl_config = CrawlerRunConfig(
         # word_count_threshold=100,
@@ -36,27 +36,30 @@ async def brave_web_search(
         exclude_external_links=False,
         process_iframes=True,
         remove_overlay_elements=True,
-        # cache_mode=CacheMode.ENABLED  # Default BYPASS to crawl unknown weather stations
+        # cache_mode=CacheMode.ENABLED
     )
     
     async with AsyncWebCrawler() as crawler:
         result = await crawler.arun(
-            url=f"https://search.brave.com/search?q={search_term_parsed}",
-            # config=crawl_config
+            
+            # TODO: Find way to circumvent new bot detection on brave SE
+            url = "https://search.brave.com/search?q={search_term_parsed}",
+            # url=f"https://duckduckgo.com/?q={search_term_parsed}",
+            config=crawl_config
         )
         
         if result.success:
         
             crawl_dict = {
-                'markdown':result.markdown#.fit_markdown, 
-                # 'links': result.links,
-                # 'media': result.media
+                'markdown':result.markdown.fit_markdown, 
+                'links': result.links,
+                'media': result.media
                 }
             
             logger.info('SUCCESS')
             logger.info(f'{crawl_dict}')
             
-            return crawl_dict
+            return str(crawl_dict)
         
         else:
             
@@ -94,15 +97,15 @@ async def deep_search(link: str) -> str:
         if result.success:
         
             crawl_dict = {
-                'markdown':result.markdown#.fit_markdown, 
-                # 'links': result.links,
-                # 'media': result.media
+                'markdown':result.markdown.fit_markdown, 
+                'links': result.links,
+                'media': result.media
                 }
             
             logger.info('SUCCESS')
             logger.info(f'{crawl_dict}')
             
-            return crawl_dict
+            return str(crawl_dict)
         
         else:
             
@@ -113,6 +116,6 @@ async def deep_search(link: str) -> str:
 
 
 if __name__ == "__main__":
-    # TESTING
+    # TODO: move testing to tests
     # asyncio.run(brave_web_search("Daniel Noboa"))
     mcp.run(transport='stdio')

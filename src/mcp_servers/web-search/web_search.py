@@ -43,7 +43,7 @@ async def brave_web_search(
         result = await crawler.arun(
             
             # TODO: Find way to circumvent new bot detection on brave SE
-            url = "https://search.brave.com/search?q={search_term_parsed}",
+            url = f"https://search.brave.com/search?q={search_term_parsed}",
             # url=f"https://duckduckgo.com/?q={search_term_parsed}",
             config=crawl_config
         )
